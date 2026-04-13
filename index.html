@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Paul Gravette — Entrepreneur & Investor operating at the intersection of business, AI, and media.">
+  <title>Paul Gravette — Entrepreneur & Investor</title>
+  <meta property="og:title" content="Paul Gravette — Entrepreneur & Investor">
+  <meta property="og:description" content="Entrepreneur, investor, and builder operating at the intersection of business, AI, and media.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://paulgravette.com">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=630&fit=crop&auto=format">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Paul Gravette — Entrepreneur & Investor">
+  <meta name="twitter:description" content="Entrepreneur, investor, and builder operating at the intersection of business, AI, and media.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=630&fit=crop&auto=format">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg': '#0A0A0A',
+            'card': '#141414',
+            'gold': '#C9A84C',
+            'border': '#222222',
+            'muted': '#A0A0A0',
+          },
+          fontFamily: {
+            display: ['"Barlow Condensed"', 'sans-serif'],
+            body: ['Barlow', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0A0A0A; color: #fff; font-family: 'Barlow', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #0A0A0A; }
+    ::-webkit-scrollbar-thumb { background: #C9A84C; }
+
+    /* ── Paths animation ── */
+    @keyframes drawPath {
+      0%   { stroke-dashoffset: 3000; opacity: 0; }
+      15%  { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 0.07; }
+    }
+    @keyframes floatPaths {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-18px); }
+    }
+    .bg-path {
+      fill: none;
+      stroke: #C9A84C;
+      stroke-dasharray: 3000;
+      stroke-dashoffset: 3000;
+      animation: drawPath 9s ease-out forwards;
+    }
+    .bg-paths-wrap { animation: floatPaths 14s ease-in-out infinite 4s; }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in  { opacity: 1; transform: none; }
+    .reveal.d1  { transition-delay: 0.1s; }
+    .reveal.d2  { transition-delay: 0.2s; }
+    .reveal.d3  { transition-delay: 0.3s; }
+
+    /* ── Nav ── */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,10,0.96); border-bottom: 1px solid #222; backdrop-filter: blur(14px); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: #fff; }
+    .wordmark span { color: #C9A84C; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: #A0A0A0; text-decoration: none; transition: color 0.2s; position: relative; padding-bottom: 2px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: #C9A84C; transition: width 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #C9A84C; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #fff; transition: all 0.25s; }
+    #mobile-nav { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid #222; padding: 1.5rem 2rem; }
+    #mobile-nav.open { display: block; }
+    #mobile-nav a { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.12em; text-transform: uppercase; color: #A0A0A0; text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid #1a1a1a; transition: color 0.2s; }
+    #mobile-nav a:hover { color: #C9A84C; }
+
+    /* ── Buttons ── */
+    .btn-gold { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: #C9A84C; color: #0A0A0A; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, box-shadow 0.2s, transform 0.15s; }
+    .btn-gold:hover { background: #D4B86A; box-shadow: 0 4px 24px rgba(201,168,76,0.28); transform: translateY(-1px); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 13px 32px; background: transparent; color: #C9A84C; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: 1px solid #C9A84C; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    .btn-ghost:hover { background: rgba(201,168,76,0.08); transform: translateY(-1px); }
+
+    /* ── Hero ── */
+    #home { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; background: #0A0A0A; padding-top: 64px; }
+    .hero-content { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px); }
+    .eyebrow-line { width: 32px; height: 1px; background: #C9A84C; }
+    .eyebrow-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; }
+    .hero-h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(76px, 13vw, 168px); font-weight: 900; line-height: 0.88; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; opacity: 0; transform: translateY(24px); }
+    .hero-h1 .gold { color: #C9A84C; }
+    .hero-sub { margin-top: 2rem; max-width: 540px; font-size: 17px; line-height: 1.75; color: #A0A0A0; opacity: 0; transform: translateY(20px); }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 2.5rem; opacity: 0; transform: translateY(20px); }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 0; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid #222; opacity: 0; transform: translateY(20px); }
+    .stat-item { padding-right: 2.5rem; margin-right: 2.5rem; border-right: 1px solid #222; }
+    .stat-item:last-child { border-right: none; margin-right: 0; }
+    .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 38px; font-weight: 800; color: #C9A84C; line-height: 1; }
+    .stat-label { font-size: 11px; color: #A0A0A0; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+    .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.45; }
+    .scroll-hint span { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #A0A0A0; }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, #C9A84C, transparent); }
+
+    /* ── Sections shared ── */
+    .section-wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .section-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+    .section-line { width: 22px; height: 1px; background: #C9A84C; flex-shrink: 0; }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; }
+    .section-h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(34px, 5vw, 56px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; color: #fff; line-height: 1.0; }
+    .gold-divider { width: 44px; height: 2px; background: #C9A84C; }
+
+    /* ── Articles ── */
+    #articles { padding: 6rem 0; background: #0A0A0A; }
+    .articles-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem; }
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .article-card { background: #141414; border: 1px solid #222; padding: 1.75rem 1.5rem 1.5rem; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .article-card:hover { border-color: #C9A84C; box-shadow: 0 0 28px rgba(201,168,76,0.1); }
+    .article-card:hover .card-img { transform: scale(1.04); }
+    .article-card:hover .read-more { gap: 10px; }
+    .card-tag { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C; margin-bottom: 0.9rem; }
+    .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; text-transform: uppercase; color: #fff; line-height: 1.2; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
+    .card-excerpt { font-size: 14px; line-height: 1.7; color: #A0A0A0; margin-bottom: 1.25rem; flex: 1; }
+    .card-divider { height: 1px; background: #222; margin-bottom: 1.25rem; }
+    .card-img-wrap { width: 100%; height: 160px; overflow: hidden; margin-bottom: 1.25rem; }
+    .card-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); transition: transform 0.35s ease; }
+    .read-more { display: inline-flex; align-items: center; gap: 7px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #C9A84C; text-decoration: none; transition: gap 0.2s; margin-top: auto; }
+
+    /* ── Identity ── */
+    #identity { padding: 6rem 0; background: #141414; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+    .identity-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .identity-col { padding: 3rem 2.5rem; text-align: center; border-right: 1px solid #222; }
+    .identity-col:last-child { border-right: none; }
+    .identity-icon { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    .identity-h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 38px; font-weight: 900; text-transform: uppercase; color: #fff; line-height: 1.0; margin-bottom: 1rem; }
+    .identity-p { font-size: 15px; line-height: 1.7; color: #A0A0A0; max-width: 240px; margin: 0 auto; }
+
+    /* ── Business ── */
+    #business { padding: 5rem 0; background: #0A0A0A; border-bottom: 1px solid #222; }
+    .business-row { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+
+    /* ── AI ── */
+    #ai { padding: 5rem 0; background: #0A0A0A; border-bottom: 1px solid #222; }
+    .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .ai-card { background: #141414; border: 1px solid #222; padding: 2rem; position: relative; overflow: hidden; }
+    .ai-glow { position: absolute; top: 0; right: 0; width: 120px; height: 120px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); pointer-events: none; }
+    .ai-focus-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #C9A84C; margin-bottom: 1.25rem; }
+    .ai-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 1rem; }
+    .ai-dot { width: 5px; height: 5px; background: #C9A84C; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .ai-item-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; color: #fff; font-size: 15px; letter-spacing: 0.04em; }
+    .ai-item-desc { font-size: 13px; color: #A0A0A0; margin-top: 2px; }
+
+    /* ── Press ── */
+    #press { padding: 4rem 0; background: #0A0A0A; border-bottom: 1px solid #222; }
+    .press-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2.5rem 3.5rem; margin-top: 2.5rem; }
+    .press-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 0.05em; text-transform: uppercase; color: #2e2e2e; cursor: pointer; transition: color 0.2s; }
+    .press-name:hover { color: #C9A84C; }
+
+    /* ── Newsletter ── */
+    #contact { padding: 6rem 0; background: #141414; border-bottom: 1px solid #222; }
+    .newsletter-wrap { max-width: 640px; margin: 0 auto; text-align: center; }
+    .newsletter-h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(44px, 7vw, 80px); font-weight: 900; text-transform: uppercase; line-height: 0.92; color: #fff; margin-bottom: 1rem; }
+    .newsletter-h2 span { color: #C9A84C; }
+    .newsletter-sub { font-size: 16px; line-height: 1.7; color: #A0A0A0; margin-bottom: 2rem; }
+    .newsletter-form { display: flex; gap: 10px; max-width: 520px; margin: 0 auto; }
+    .newsletter-input { flex: 1; padding: 14px 18px; background: #0A0A0A; border: 1px solid #222; color: #fff; font-family: 'Barlow', sans-serif; font-size: 15px; transition: border-color 0.2s; }
+    .newsletter-input::placeholder { color: #555; }
+    .newsletter-input:focus { outline: none; border-color: #C9A84C; }
+    .newsletter-note { font-size: 12px; color: #444; margin-top: 10px; }
+
+    /* ── Social bar ── */
+    #social-bar { padding: 1.5rem 0; background: #0A0A0A; border-bottom: 1px solid #222; }
+    .social-icons { display: flex; justify-content: center; gap: 2rem; }
+    .soc { color: #A0A0A0; transition: color 0.2s, transform 0.2s; cursor: pointer; }
+    .soc:hover { color: #C9A84C; transform: translateY(-2px); }
+
+    /* ── Footer ── */
+    footer { background: #0A0A0A; padding: 3rem 0 2rem; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .footer-brand-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; margin-bottom: 0.5rem; }
+    .footer-brand-name span { color: #C9A84C; }
+    .footer-brand-desc { font-size: 14px; color: #A0A0A0; max-width: 260px; line-height: 1.6; }
+    .footer-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 3rem; }
+    .footer-nav a { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #A0A0A0; text-decoration: none; transition: color 0.2s; }
+    .footer-nav a:hover { color: #C9A84C; }
+    .footer-divider { height: 1px; background: #222; margin-bottom: 1.5rem; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 12px; color: #444; letter-spacing: 0.04em; }
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: 12px; color: #444; text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: #C9A84C; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .articles-grid { grid-template-columns: 1fr; }
+      .identity-grid { grid-template-columns: 1fr; }
+      .identity-col { border-right: none; border-bottom: 1px solid #222; }
+      .identity-col:last-child { border-bottom: none; }
+      .ai-grid { grid-template-columns: 1fr; }
+      .articles-header a.view-all { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-stats { gap: 1.5rem; }
+      .stat-item { border-right: none; margin-right: 0; padding-right: 0; }
+      .business-row { flex-direction: column; }
+      .footer-top { flex-direction: column; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas a { justify-content: center; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .bg-path, .bg-paths-wrap, .reveal { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="wordmark">Paul <span>Gravette</span></a>
+    <ul class="nav-links">
+      <li><a href="#home"     class="active">Home</a></li>
+      <li><a href="#business">Business</a></li>
+      <li><a href="#ai">AI</a></li>
+      <li><a href="#identity">About</a></li>
+      <li><a href="#press">Press</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="ham-btn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div id="mobile-nav">
+    <a href="#home">Home</a>
+    <a href="#business">Business</a>
+    <a href="#ai">AI</a>
+    <a href="#identity">About</a>
+    <a href="#press">Press</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ══════════════════════════════ -->
+<section id="home">
+
+  <!-- Background animated SVG paths -->
+  <div class="bg-paths-wrap" style="position:absolute;inset:0;pointer-events:none;z-index:1;" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <path class="bg-path" style="animation-delay:0s"    stroke-width="1.5" d="M-80,500 C180,180 420,720 740,360 C1060,0 1240,520 1560,260"/>
+      <path class="bg-path" style="animation-delay:0.6s"  stroke-width="1"   d="M-160,650 C120,320 520,820 840,420 C1160,20 1320,620 1680,310"/>
+      <path class="bg-path" style="animation-delay:1.2s"  stroke-width="0.8" d="M40,80 C320,400 640,30 960,400 C1280,770 1360,180 1520,480"/>
+      <path class="bg-path" style="animation-delay:1.8s"  stroke-width="1.2" d="M220,900 C420,620 740,860 1040,520 C1340,180 1420,700 1620,400"/>
+      <path class="bg-path" style="animation-delay:2.4s"  stroke-width="0.6" d="M-40,720 C180,500 380,660 640,360 C900,60 1100,600 1400,300"/>
+      <path class="bg-path" style="animation-delay:3s"    stroke-width="0.5" d="M120,0 C220,320 80,620 300,900"/>
+      <path class="bg-path" style="animation-delay:3.5s"  stroke-width="0.5" d="M1320,0 C1200,320 1380,620 1100,900"/>
+    </svg>
+  </div>
+
+  <!-- Bottom radial glow -->
+  <div style="position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse 55% 45% at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 65%);" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="h-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Entrepreneur · Investor · Builder</span>
+    </div>
+
+    <h1 class="hero-h1" id="h-h1">
+      Building<br>
+      <span class="gold">What's</span><br>
+      Next.
+    </h1>
+
+    <p class="hero-sub" id="h-sub">
+      Operator, investor, and media voice at the intersection of business, artificial intelligence, and emerging markets. Backing the builders who don't wait for permission.
+    </p>
+
+    <div class="hero-ctas" id="h-ctas">
+      <a href="#business" class="btn-gold">
+        Explore My Work
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="#articles" class="btn-ghost">
+        Read My Writing
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-stats" id="h-stats">
+      <div class="stat-item">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years Operating</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">$1B+</div>
+        <div class="stat-label">Portfolio Value</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Companies Built</div>
+      </div>
+      <div class="stat-item" style="border-right:none;margin-right:0;padding-right:0;">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Core Sectors</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ FEATURED ARTICLES ═══════════════════════ -->
+<section id="articles" style="padding:6rem 0;background:#0A0A0A;">
+  <div class="section-wrap">
+
+    <div class="articles-header reveal">
+      <div>
+        <div class="section-eyebrow"><div class="section-line"></div><span class="section-label">Featured Writing</span></div>
+        <h2 class="section-h2">Perspectives &amp;<br>Analysis</h2>
+      </div>
+      <a href="#" class="view-all read-more" style="margin-bottom:4px;">
+        All Articles
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="articles-grid">
+
+      <!-- Card 1 -->
+      <article class="article-card reveal d1">
+        <div class="card-tag">AI Infrastructure</div>
+        <h3 class="card-title">America's AI Infrastructure Is Growing Bigger Than You Realize</h3>
+        <p class="card-excerpt">The physical backbone of the AI economy — data centers, power grids, fiber networks — is being built at a pace most people haven't started to comprehend. Here's what the numbers actually say.</p>
+        <div class="card-divider"></div>
+        <div class="card-img-wrap">
+          <img class="card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=320&fit=crop&auto=format" alt="AI data center infrastructure" loading="lazy">
+        </div>
+        <a href="#" class="read-more">
+          Read Article
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="article-card reveal d2">
+        <div class="card-tag">Market Intelligence</div>
+        <h3 class="card-title">How AI Is Quietly Predicting What the World Will Buy Next</h3>
+        <p class="card-excerpt">Predictive commerce isn't a future concept — it's already inside the supply chains, ad auctions, and logistics networks running the global economy. Most brands have no idea it's happening.</p>
+        <div class="card-divider"></div>
+        <div class="card-img-wrap">
+          <img class="card-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=320&fit=crop&auto=format" alt="AI market prediction" loading="lazy">
+        </div>
+        <a href="#" class="read-more">
+          Read Article
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="article-card reveal d3">
+        <div class="card-tag">Founder Story</div>
+        <h3 class="card-title">Steve Martorano: From Basement Hustle to Italian-American Icon</h3>
+        <p class="card-excerpt">No culinary school. No investors. Just a grandmother's recipes, a work ethic that didn't quit, and a vision that turned a South Philly tradition into a nationwide hospitality empire.</p>
+        <div class="card-divider"></div>
+        <div class="card-img-wrap">
+          <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=320&fit=crop&auto=format" alt="Italian-American restaurant" loading="lazy">
+        </div>
+        <a href="#" class="read-more">
+          Read Article
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ THREE-PART IDENTITY ══════════════════════ -->
+<section id="identity" style="padding:6rem 0;background:#141414;border-top:1px solid #222;border-bottom:1px solid #222;">
+  <div class="section-wrap">
+
+    <div class="reveal" style="text-align:center;margin-bottom:3.5rem;">
+      <div class="section-eyebrow" style="justify-content:center;"><div class="section-line"></div><span class="section-label">What I Do</span><div class="section-line"></div></div>
+      <h2 class="section-h2" style="margin-top:0.5rem;">Three Ways I Create Value</h2>
+    </div>
+
+    <div class="identity-grid">
+
+      <div class="identity-col reveal d1">
+        <div class="identity-icon">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <div class="gold-divider" style="margin:0 auto 1.25rem;"></div>
+        <h3 class="identity-h3">Builds<br>Companies</h3>
+        <p class="identity-p">From concept to capitalization. Operational experience across hospitality, media, technology, and consumer brands spanning two decades.</p>
+      </div>
+
+      <div class="identity-col reveal d2">
+        <div class="identity-icon">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="gold-divider" style="margin:0 auto 1.25rem;"></div>
+        <h3 class="identity-h3">Invests in<br>Founders</h3>
+        <p class="identity-p">Strategic capital for contrarian builders at early stages. Focus on AI-native models, media, and the infrastructure powering the next decade.</p>
+      </div>
+
+      <div class="identity-col reveal d3">
+        <div class="identity-icon">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/>
+          </svg>
+        </div>
+        <div class="gold-divider" style="margin:0 auto 1.25rem;"></div>
+        <h3 class="identity-h3">Shares<br>What's Next</h3>
+        <p class="identity-p">Written and spoken analysis on where business, AI, and culture are heading — before the consensus catches up. Direct signal, zero noise.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ BUSINESS ══════════════════════════════ -->
+<section id="business" style="padding:5rem 0;background:#0A0A0A;border-bottom:1px solid #222;">
+  <div class="section-wrap">
+    <div class="business-row reveal">
+      <div>
+        <div class="section-eyebrow"><div class="section-line"></div><span class="section-label">Portfolio &amp; Ventures</span></div>
+        <h2 class="section-h2">Gravette Companies</h2>
+        <p style="font-size:16px;line-height:1.75;color:#A0A0A0;margin-top:0.75rem;max-width:520px;">A portfolio of operating businesses and investments spanning hospitality, media, technology, and AI infrastructure. Each venture built to last.</p>
+      </div>
+      <a href="#contact" class="btn-gold" style="flex-shrink:0;">
+        Work Together
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ AI ══════════════════════════════════ -->
+<section id="ai" style="padding:5rem 0;background:#0A0A0A;border-bottom:1px solid #222;">
+  <div class="section-wrap">
+    <div class="ai-grid reveal">
+      <div>
+        <div class="section-eyebrow"><div class="section-line"></div><span class="section-label">Artificial Intelligence</span></div>
+        <h2 class="section-h2" style="margin-bottom:1rem;">AI Is the<br>Infrastructure Play<br>of Our Lifetime.</h2>
+        <p style="font-size:16px;line-height:1.75;color:#A0A0A0;">Not the chatbot. The layer underneath everything — compute, data pipelines, intelligent automation, and the businesses running on top of it. That's where the real value is being created.</p>
+      </div>
+      <div class="ai-card">
+        <div class="ai-glow"></div>
+        <div class="ai-focus-label">AI Focus Areas</div>
+        <div class="ai-item">
+          <div class="ai-dot"></div>
+          <div>
+            <div class="ai-item-title">AI Infrastructure &amp; Data Centers</div>
+            <div class="ai-item-desc">The physical and digital backbone of the AI economy</div>
+          </div>
+        </div>
+        <div class="ai-item">
+          <div class="ai-dot"></div>
+          <div>
+            <div class="ai-item-title">Predictive Commerce &amp; Market Intelligence</div>
+            <div class="ai-item-desc">AI-driven demand forecasting and consumer behavior</div>
+          </div>
+        </div>
+        <div class="ai-item">
+          <div class="ai-dot"></div>
+          <div>
+            <div class="ai-item-title">AI-Native Business Models</div>
+            <div class="ai-item-desc">Companies built from the ground up on intelligent systems</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PRESS ══════════════════════════════════ -->
+<section id="press" style="padding:4rem 0;background:#0A0A0A;border-bottom:1px solid #222;">
+  <div class="section-wrap">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow" style="justify-content:center;"><div class="section-line"></div><span class="section-label">Media &amp; Press</span><div class="section-line"></div></div>
+      <h2 class="section-h2" style="margin-top:0.5rem;margin-bottom:2.5rem;">As Seen In</h2>
+    </div>
+    <div class="press-logos reveal">
+      <span class="press-name">Forbes</span>
+      <span class="press-name">Bloomberg</span>
+      <span class="press-name">Wall Street Journal</span>
+      <span class="press-name">Fast Company</span>
+      <span class="press-name">Inc. Magazine</span>
+      <span class="press-name">TechCrunch</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ NEWSLETTER ══════════════════════════════ -->
+<section id="contact" style="padding:6rem 0;background:#141414;border-bottom:1px solid #222;">
+  <div class="section-wrap">
+    <div class="newsletter-wrap reveal">
+      <div class="section-eyebrow" style="justify-content:center;margin-bottom:1rem;">
+        <div class="section-line"></div><span class="section-label">Newsletter</span><div class="section-line"></div>
+      </div>
+      <h2 class="newsletter-h2">Stay Ahead.<br><span>Subscribe Free.</span></h2>
+      <p class="newsletter-sub">Analysis, insights, and perspectives on business, AI, and what's coming next. No noise. No filler. Straight to your inbox.</p>
+      <form class="newsletter-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input class="newsletter-input" type="email" name="email" required placeholder="Your email address" aria-label="Email address">
+        <button type="submit" class="btn-gold">
+          Subscribe
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </form>
+      <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SOCIAL BAR ═════════════════════════════ -->
+<div id="social-bar">
+  <div class="social-icons">
+    <!-- LinkedIn -->
+    <a href="#" class="soc" aria-label="LinkedIn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <!-- X / Twitter -->
+    <a href="#" class="soc" aria-label="X / Twitter">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+    </a>
+    <!-- Instagram -->
+    <a href="#" class="soc" aria-label="Instagram">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+    </a>
+    <!-- YouTube -->
+    <a href="#" class="soc" aria-label="YouTube">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════════ FOOTER ═════════════════════════════════ -->
+<footer>
+  <div class="section-wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Paul <span>Gravette</span></div>
+        <p class="footer-brand-desc">Entrepreneur, investor, and builder operating at the intersection of business, AI, and media.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#business">Business</a>
+        <a href="#ai">AI</a>
+        <a href="#identity">About</a>
+        <a href="#press">Press</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Gravette Companies, LLC. All Rights Reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Terms of Use</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════════ -->
+<script>
+  // ── Mobile menu ──
+  const hamBtn = document.getElementById('ham-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  const bars = hamBtn.querySelectorAll('span');
+  let menuOpen = false;
+
+  hamBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileNav.classList.toggle('open', menuOpen);
+    if (menuOpen) {
+      bars[0].style.cssText = 'transform:translateY(7px) rotate(45deg)';
+      bars[1].style.cssText = 'opacity:0';
+      bars[2].style.cssText = 'transform:translateY(-7px) rotate(-45deg)';
+    } else {
+      bars.forEach(b => b.style.cssText = '');
+    }
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menuOpen = false;
+      mobileNav.classList.remove('open');
+      bars.forEach(b => b.style.cssText = '');
+    });
+  });
+
+  // ── Scroll reveal ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => ro.observe(el));
+
+  // ── Hero entrance (GSAP) ──
+  gsap.registerPlugin(ScrollTrigger);
+  const heroSeq = [
+    { el: '#h-eyebrow', delay: 0.2 },
+    { el: '#h-h1',      delay: 0.45 },
+    { el: '#h-sub',     delay: 0.75 },
+    { el: '#h-ctas',    delay: 1.0 },
+    { el: '#h-stats',   delay: 1.2 },
+  ];
+  heroSeq.forEach(({ el, delay }) => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 22 },
+      { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', delay }
+    );
+  });
+
+  // ── Active nav on scroll ──
+  const navLinkEls = document.querySelectorAll('.nav-links a');
+  const sectionIds = ['home','articles','identity','business','ai','press','contact'];
+  const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinkEls.forEach(a => a.classList.remove('active'));
+        const match = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { threshold: 0.45 });
+  sectionEls.forEach(s => navObs.observe(s));
+
+  // ── Card image zoom ──
+  document.querySelectorAll('.article-card').forEach(card => {
+    const img = card.querySelector('.card-img');
+    if (img) {
+      card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
+      card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
+    }
+  });
+</script>
+</body>
+</html>
