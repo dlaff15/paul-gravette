@@ -103,7 +103,7 @@
 
     /* ── Hero ── */
     #home { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; background: #08122a; padding-top: 64px; }
-    .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 10%; z-index: 0; }
+    .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 35% 12%; transform: scaleX(-1); z-index: 0; }
     .hero-dark-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(8,18,42,0.95) 0%, rgba(8,18,42,0.90) 42%, rgba(8,18,42,0.52) 63%, rgba(8,18,42,0.28) 100%); z-index: 1; }
     .hero-content { position: relative; z-index: 3; max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 5rem; }
     .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px); }
@@ -226,7 +226,7 @@
       .hamburger { display: flex; }
       /* Push hero text to bottom so Paul's face shows at the top */
       #home { align-items: flex-end; min-height: 120vh; }
-      .hero-bg-img { object-position: center top; }
+      .hero-bg-img { object-position: 35% 8%; }
       .hero-dark-overlay { background: linear-gradient(to bottom, rgba(8,18,42,0.05) 0%, rgba(8,18,42,0.15) 22%, rgba(8,18,42,0.80) 40%, rgba(8,18,42,0.95) 56%, rgba(8,18,42,0.98) 100%); }
       .hero-content { padding-top: 2rem; padding-bottom: 3rem; }
       .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
