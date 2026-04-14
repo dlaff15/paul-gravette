@@ -103,7 +103,9 @@
 
     /* ── Hero ── */
     #home { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; background: #08122a; padding-top: 64px; }
-    .hero-content { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+    .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; z-index: 0; }
+    .hero-dark-overlay { position: absolute; inset: 0; background: rgba(8,18,42,0.82); z-index: 1; }
+    .hero-content { position: relative; z-index: 3; max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 5rem; }
     .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px); }
     .eyebrow-line { width: 32px; height: 2px; background: #3489cf; border-radius: 2px; }
     .eyebrow-text { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #3489cf; }
@@ -269,8 +271,12 @@
 
 <!-- ═══════════════════════════════ HERO ══════════════════════════════ -->
 <section id="home">
+  <!-- Full-screen background image -->
+  <img class="hero-bg-img" src="https://raw.githubusercontent.com/dlaff15/paul-gravette/main/paul%20-%20pic%203.webp" alt="" aria-hidden="true">
+  <!-- Dark overlay -->
+  <div class="hero-dark-overlay" aria-hidden="true"></div>
   <!-- Animated background paths in Gravette Capital blue -->
-  <div class="bg-paths-wrap" style="position:absolute;inset:0;pointer-events:none;z-index:1;" aria-hidden="true">
+  <div class="bg-paths-wrap" style="position:absolute;inset:0;pointer-events:none;z-index:2;" aria-hidden="true">
     <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
       <path class="bg-path" style="animation-delay:0s"   stroke-width="1.5" d="M-80,500 C180,180 420,720 740,360 C1060,0 1240,520 1560,260"/>
       <path class="bg-path" style="animation-delay:0.6s" stroke-width="1"   d="M-160,650 C120,320 520,820 840,420 C1160,20 1320,620 1680,310"/>
@@ -281,7 +287,7 @@
       <path class="bg-path" style="animation-delay:3.5s" stroke-width="0.5" d="M1320,0 C1200,320 1380,620 1100,900"/>
     </svg>
   </div>
-  <div style="position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse 55% 45% at 50% 100%, rgba(52,137,207,0.07) 0%, transparent 65%);" aria-hidden="true"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse 55% 45% at 50% 100%, rgba(52,137,207,0.12) 0%, transparent 65%);" aria-hidden="true"></div>
 
   <div class="hero-content">
     <div class="hero-eyebrow" id="h-eyebrow">
