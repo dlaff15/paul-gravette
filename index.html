@@ -103,15 +103,15 @@
 
     /* ── Hero ── */
     #home { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; background: #08122a; padding-top: 64px; }
-    .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 10%; z-index: 0; }
-    .hero-dark-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(8,18,42,0.95) 0%, rgba(8,18,42,0.90) 42%, rgba(8,18,42,0.52) 63%, rgba(8,18,42,0.28) 100%); z-index: 1; }
+    .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 10%; opacity: 0.5; z-index: 0; }
+    .hero-dark-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(8,18,42,0.55) 0%, rgba(8,18,42,0.50) 42%, rgba(8,18,42,0.25) 63%, rgba(8,18,42,0.10) 100%); z-index: 1; }
     .hero-content { position: relative; z-index: 3; max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 5rem; }
     .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px); }
     .eyebrow-line { width: 32px; height: 2px; background: #3489cf; border-radius: 2px; }
     .eyebrow-text { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #3489cf; }
-    .hero-h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(72px, 12vw, 160px); font-weight: 900; line-height: 0.88; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; opacity: 0; transform: translateY(24px); }
+    .hero-h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px, 2.4vw, 32px); font-weight: 700; line-height: 1.25; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; opacity: 0; transform: translateY(24px); }
     .hero-h1 .accent { color: #3489cf; }
-    .hero-sub { margin-top: 2rem; max-width: 540px; font-size: 17px; line-height: 1.75; color: #8a9bb8; font-family: 'Open Sans', sans-serif; opacity: 0; transform: translateY(20px); }
+    .hero-sub { margin-top: 0.75rem; max-width: 480px; font-size: 14px; line-height: 1.75; color: #8a9bb8; font-family: 'Open Sans', sans-serif; opacity: 0; transform: translateY(20px); }
     .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 2.5rem; opacity: 0; transform: translateY(20px); }
     .hero-stats { display: flex; flex-wrap: wrap; gap: 0; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid #1a2d52; opacity: 0; transform: translateY(20px); }
     .stat-item { padding-right: 2.5rem; margin-right: 2.5rem; border-right: 1px solid #1a2d52; }
@@ -307,19 +307,8 @@
     </h1>
 
     <p class="hero-sub" id="h-sub">
-      Operator, investor, and media voice at the intersection of business, artificial intelligence, and emerging markets. Backing the builders who don't wait for permission.
+      Beyond the headlines, we examine the capital flows, infrastructure buildouts, and structural economic shifts shaping America's competitive future.
     </p>
-
-    <div class="hero-ctas" id="h-ctas">
-      <a href="#business" class="btn-blue">
-        Explore My Work
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="#articles" class="btn-ghost">
-        Read My Writing
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-    </div>
 
     <div class="hero-stats" id="h-stats">
       <div class="stat-item">
